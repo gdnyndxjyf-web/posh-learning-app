@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posh Learning App - Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .preview-container {
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .devices {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .device {
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .device.iphone {
+            width: 375px;
+        }
+
+        .device.ipad {
+            width: 500px;
+        }
+
+        .device-notch {
+            background: #1a1a1a;
+            height: 25px;
+            width: 150px;
+            border-radius: 0 0 20px 20px;
+            margin: 0 auto 5px;
+            position: relative;
+        }
+
+        .screen {
+            background: #f8fafc;
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .iphone .screen {
+            height: 700px;
+        }
+
+        .ipad .screen {
+            height: 650px;
+        }
+
+        .screen-content {
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            padding: 40px 24px;
+            color: white;
+        }
+
+        .hero h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        /* Curriculum Selector */
+        .section {
+            padding: 16px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .curriculum-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .curriculum-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 2px solid;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .curriculum-btn.british {
+            border-color: #991b1b;
+            color: #991b1b;
+        }
+
+        .curriculum-btn.american {
+            border-color: #1e3a8a;
+            color: #1e3a8a;
+        }
+
+        .curriculum-btn.active {
+            color: white;
+        }
+
+        .curriculum-btn.british.active {
+            background: #991b1b;
+        }
+
+        .curriculum-btn.american.active {
+            background: #1e3a8a;
+        }
+
+        /* Course Card */
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .course-thumbnail {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .course-content {
+            padding: 16px;
+        }
+
+        .course-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .course-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .course-description {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .course-footer span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .category-card {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .category-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .category-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-item.active {
+            color: #6366f1;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 10px;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding-bottom: 60px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Browse Screen */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            margin: 16px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            gap: 12px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            flex: 1;
+            background: transparent;
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 0 16px 16px;
+        }
+
+        .chip {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            white-space: nowrap;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chip.active {
+            background: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+
+        /* Profile Screen */
+        .profile-header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            padding: 32px 24px;
+            text-align: center;
+            color: white;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 4px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0 auto 16px;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 12px;
+        }
+
+        .profile-badges {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .profile-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+        }
+
+        .stats-card {
+            display: flex;
+            background: white;
+            margin: -30px 16px 16px;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-item-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .stat-item-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .divider {
+            width: 1px;
+            background: #e2e8f0;
+        }
+
+        /* My Courses Screen */
+        .progress-card {
+            background: #6366f1;
+            margin: 16px;
+            padding: 20px;
+            border-radius: 16px;
+            color: white;
+        }
+
+        .progress-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .progress-stat {
+            text-align: center;
+        }
+
+        .progress-stat-value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .progress-stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        .progress-bar-container {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            margin: -8px 16px 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: #10b981;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #64748b;
+            text-align: right;
+            margin: 0 16px 12px;
+        }
+
+        /* Controls */
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            display: block;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .control-group select,
+        .control-group button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            font-size: 14px;
+            cursor: pointer;
+            background: white;
+        }
+
+        .control-group button {
+            background: #6366f1;
+            color: white;
+            border: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .control-group button:hover {
+            background: #4f46e5;
+        }
+
+        @media (max-width: 768px) {
+            .devices {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div class="header">
+            <h1>📱 Posh Learning App Preview</h1>
+            <p>Interactive preview of the iOS & macOS educational app</p>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Select Screen:</label>
+                <select id="screenSelector" onchange="changeScreen()">
+                    <option value="home">Home</option>
+                    <option value="browse">Browse</option>
+                    <option value="mycourses">My Courses</option>
+                    <option value="profile">Profile</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Curriculum:</label>
+                <select id="curriculumSelector" onchange="changeCurriculum()">
+                    <option value="british">British (GCSE, A-Level)</option>
+                    <option value="american">American (Grades 9-12, College)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="devices">
+            <!-- iPhone Device -->
+            <div class="device iphone">
+                <div class="device-notch"></div>
+                <div class="screen">
+                    <div class="screen-content" id="iphoneScreen">
+                        <!-- Home Screen -->
+                        <div class="tab-content active" data-screen="home">
+                            <div class="hero">
+                                <h2>Welcome to Posh Learning</h2>
+                                <p>Excel in your studies with expert-led courses</p>
+                                <div class="stats">
+                                    <div class="stat">
+                                        <div class="stat-number">50+</div>
+                                        <div class="stat-label">Courses</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-number">10K+</div>
+                                        <div class="stat-label">Students</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-number">4.8★</div>
+                                        <div class="stat-label">Rating</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="curriculum-selector">
+                                    <button class="curriculum-btn british active" onclick="selectCurriculum('british', this)">🇬🇧 British</button>
+                                    <button class="curriculum-btn american" onclick="selectCurriculum('american', this)">🇺🇸 American</button>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <div class="section-title">Featured Courses</div>
+                                    <span style="color: #6366f1; font-weight: 600; font-size: 14px;">See All →</span>
+                                </div>
+
+                                <div id="featuredCourses">
+                                    <!-- Courses will be injected here -->
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-title">Categories</div>
+                                <div class="categories-grid">
+                                    <div class="category-card" style="background: rgba(139, 92, 246, 0.1);">
+                                        <div class="category-icon">🧮</div>
+                                        <div class="category-name" style="color: #8b5cf6;">Mathematics</div>
+                                    </div>
+                                    <div class="category-card" style="background: rgba(16, 185, 129, 0.1);">
+                                        <div class="category-icon">🔬</div>
+                                        <div class="category-name" style="color: #10b981;">Sciences</div>
+                                    </div>
+                                    <div class="category-card" style="background: rgba(245, 158, 11, 0.1);">
+                                        <div class="category-icon">📚</div>
+                                        <div class="category-name" style="color: #f59e0b;">Languages</div>
+                                    </div>
+                                    <div class="category-card" style="background: rgba(239, 68, 68, 0.1);">
+                                        <div class="category-icon">🏛️</div>
+                                        <div class="category-name" style="color: #ef4444;">Humanities</div>
+                                    </div>
+                                    <div class="category-card" style="background: rgba(59, 130, 246, 0.1);">
+                                        <div class="category-icon">💻</div>
+                                        <div class="category-name" style="color: #3b82f6;">Technology</div>
+                                    </div>
+                                    <div class="category-card" style="background: rgba(6, 182, 212, 0.1);">
+                                        <div class="category-icon">💼</div>
+                                        <div class="category-name" style="color: #06b6d4;">Business</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Browse Screen -->
+                        <div class="tab-content" data-screen="browse">
+                            <div class="search-bar">
+                                <span style="font-size: 24px; color: #64748b;">🔍</span>
+                                <input type="text" placeholder="Search courses...">
+                            </div>
+
+                            <div class="section" style="padding-top: 0;">
+                                <div class="curriculum-selector">
+                                    <button class="curriculum-btn british active">🇬🇧 British</button>
+                                    <button class="curriculum-btn american">🇺🇸 American</button>
+                                </div>
+                            </div>
+
+                            <div class="section" style="padding-top: 0;">
+                                <div style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Categories</div>
+                                <div class="filter-chips">
+                                    <div class="chip active">All</div>
+                                    <div class="chip">Mathematics</div>
+                                    <div class="chip">Sciences</div>
+                                    <div class="chip">Languages</div>
+                                    <div class="chip">Humanities</div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div style="font-size: 14px; color: #64748b; margin-bottom: 16px;">6 courses found</div>
+                                <div id="browseCourses">
+                                    <!-- Courses will be injected here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- My Courses Screen -->
+                        <div class="tab-content" data-screen="mycourses">
+                            <div class="progress-card">
+                                <div class="progress-title">Your Progress</div>
+                                <div class="progress-stats">
+                                    <div class="progress-stat">
+                                        <div class="progress-stat-value">4</div>
+                                        <div class="progress-stat-label">Active Courses</div>
+                                    </div>
+                                    <div class="progress-stat">
+                                        <div class="progress-stat-value">24</div>
+                                        <div class="progress-stat-label">Completed Lessons</div>
+                                    </div>
+                                    <div class="progress-stat">
+                                        <div class="progress-stat-value">7</div>
+                                        <div class="progress-stat-label">Day Streak</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-title">Continue Learning</div>
+                                <div id="myCoursesContent">
+                                    <!-- Courses with progress will be injected here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Screen -->
+                        <div class="tab-content" data-screen="profile">
+                            <div class="profile-header">
+                                <div class="avatar">AJ</div>
+                                <div class="profile-name">Alex Johnson</div>
+                                <div class="profile-email">alex.johnson@student.edu</div>
+                                <div class="profile-badges">
+                                    <div class="profile-badge">British</div>
+                                    <div class="profile-badge">A-Level</div>
+                                </div>
+                            </div>
+
+                            <div class="stats-card">
+                                <div class="stat-item">
+                                    <div class="stat-item-value">12</div>
+                                    <div class="stat-item-label">Courses</div>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="stat-item">
+                                    <div class="stat-item-value">47</div>
+                                    <div class="stat-item-label">Certificates</div>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="stat-item">
+                                    <div class="stat-item-value">4.9</div>
+                                    <div class="stat-item-label">Avg Score</div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-title">Achievements</div>
+                                <div class="categories-grid">
+                                    <div class="category-card" style="background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+                                        <div class="category-icon" style="color: #f59e0b;">🏅</div>
+                                        <div class="category-name" style="color: #1e293b;">Top Performer</div>
+                                    </div>
+                                    <div class="category-card" style="background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+                                        <div class="category-icon" style="color: #ef4444;">🔥</div>
+                                        <div class="category-name" style="color: #1e293b;">30 Day Streak</div>
+                                    </div>
+                                    <div class="category-card" style="background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+                                        <div class="category-icon" style="color: #10b981;">🏆</div>
+                                        <div class="category-name" style="color: #1e293b;">Course Complete</div>
+                                    </div>
+                                    <div class="category-card" style="background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+                                        <div class="category-icon" style="color: #3b82f6;">⭐</div>
+                                        <div class="category-name" style="color: #1e293b;">Quiz Master</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-title">Settings</div>
+                                <div style="background: white; border-radius: 12px; overflow: hidden;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid #e2e8f0;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <span style="font-size: 24px; color: #6366f1;">👤</span>
+                                            <span>Edit Profile</span>
+                                        </div>
+                                        <span style="color: #64748b;">›</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid #e2e8f0;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <span style="font-size: 24px; color: #6366f1;">🎓</span>
+                                            <span>Academic Settings</span>
+                                        </div>
+                                        <span style="color: #64748b;">›</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid #e2e8f0;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <span style="font-size: 24px; color: #6366f1;">🔔</span>
+                                            <span>Notifications</span>
+                                        </div>
+                                        <span style="color: #64748b;">›</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <span style="font-size: 24px; color: #6366f1;">❓</span>
+                                            <span>Help & Support</span>
+                                        </div>
+                                        <span style="color: #64748b;">›</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Navigation -->
+                        <div class="bottom-nav">
+                            <div class="nav-item active" onclick="switchTab(0, this)">
+                                <div class="nav-icon">🏠</div>
+                                <div class="nav-label">Home</div>
+                            </div>
+                            <div class="nav-item" onclick="switchTab(1, this)">
+                                <div class="nav-icon">🔍</div>
+                                <div class="nav-label">Browse</div>
+                            </div>
+                            <div class="nav-item" onclick="switchTab(2, this)">
+                                <div class="nav-icon">📚</div>
+                                <div class="nav-label">My Courses</div>
+                            </div>
+                            <div class="nav-item" onclick="switchTab(3, this)">
+                                <div class="nav-icon">👤</div>
+                                <div class="nav-label">Profile</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const courses = {
+            british: [
+                {
+                    title: 'GCSE Mathematics (Higher Tier)',
+                    description: 'Complete preparation for GCSE Mathematics Higher Tier',
+                    thumbnail: '📐',
+                    badge: '🇬🇧 GCSE',
+                    badgeColor: '#991b1b',
+                    duration: '12 weeks',
+                    rating: '4.8',
+                    students: '1250'
+                },
+                {
+                    title: 'A-Level Pure Mathematics',
+                    description: 'Advanced pure mathematics covering calculus and algebra',
+                    thumbnail: '📊',
+                    badge: '🇬🇧 A-Level',
+                    badgeColor: '#991b1b',
+                    duration: '20 weeks',
+                    rating: '4.9',
+                    students: '890'
+                },
+                {
+                    title: 'GCSE Biology',
+                    description: 'Comprehensive biology course for GCSE examinations',
+                    thumbnail: '🔬',
+                    badge: '🇬🇧 GCSE',
+                    badgeColor: '#991b1b',
+                    duration: '14 weeks',
+                    rating: '4.7',
+                    students: '1100'
+                }
+            ],
+            american: [
+                {
+                    title: 'Algebra II',
+                    description: 'Advanced algebra topics including polynomials and exponentials',
+                    thumbnail: '🔢',
+                    badge: '🇺🇸 Grade 11',
+                    badgeColor: '#1e3a8a',
+                    duration: '16 weeks',
+                    rating: '4.7',
+                    students: '2100'
+                },
+                {
+                    title: 'AP US History',
+                    description: 'College-level US history from pre-Columbian to modern times',
+                    thumbnail: '🗽',
+                    badge: '🇺🇸 Grade 11',
+                    badgeColor: '#1e3a8a',
+                    duration: '24 weeks',
+                    rating: '4.6',
+                    students: '1560'
+                },
+                {
+                    title: 'Calculus I',
+                    description: 'Limits, derivatives, and introduction to integration',
+                    thumbnail: '∫',
+                    badge: '🇺🇸 Freshman',
+                    badgeColor: '#1e3a8a',
+                    duration: '14 weeks',
+                    rating: '4.8',
+                    students: '3200'
+                }
+            ]
+        };
+
+        let currentCurriculum = 'british';
+
+        function renderCourses(container, showProgress = false) {
+            const coursesToShow = courses[currentCurriculum];
+            container.innerHTML = coursesToShow.map((course, index) => `
+                <div class="course-card">
+                    <div class="course-thumbnail" style="background: ${course.badgeColor}20;">
+                        ${course.thumbnail}
+                    </div>
+                    <div class="course-content">
+                        <div class="course-badge" style="background: ${course.badgeColor};">
+                            ${course.badge}
+                        </div>
+                        <div class="course-title">${course.title}</div>
+                        <div class="course-description">${course.description}</div>
+                        <div class="course-footer">
+                            <span>⏱️ ${course.duration}</span>
+                            <span>⭐ ${course.rating}</span>
+                            <span>👥 ${course.students}</span>
+                        </div>
+                    </div>
+                </div>
+                ${showProgress ? `
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: ${35 + (index * 10)}%;"></div>
+                    </div>
+                    <div class="progress-text">${35 + (index * 10)}% Complete</div>
+                ` : ''}
+            `).join('');
+        }
+
+        function selectCurriculum(curriculum, element) {
+            currentCurriculum = curriculum;
+            document.querySelectorAll('.curriculum-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            updateCourses();
+        }
+
+        function updateCourses() {
+            renderCourses(document.getElementById('featuredCourses'));
+            renderCourses(document.getElementById('browseCourses'));
+            renderCourses(document.getElementById('myCoursesContent'), true);
+        }
+
+        function switchTab(index, element) {
+            const screens = ['home', 'browse', 'mycourses', 'profile'];
+
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[data-screen="${screens[index]}"]`).classList.add('active');
+
+            document.getElementById('screenSelector').value = screens[index];
+        }
+
+        function changeScreen() {
+            const screen = document.getElementById('screenSelector').value;
+            const screens = ['home', 'browse', 'mycourses', 'profile'];
+            const index = screens.indexOf(screen);
+
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[data-screen="${screen}"]`).classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+        }
+
+        function changeCurriculum() {
+            const curriculum = document.getElementById('curriculumSelector').value;
+            currentCurriculum = curriculum;
+
+            document.querySelectorAll('.curriculum-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.classList.contains(curriculum)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            updateCourses();
+        }
+
+        // Initialize
+        updateCourses();
+    </script>
+</body>
+</html>
